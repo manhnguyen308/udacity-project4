@@ -5,16 +5,15 @@
 # Step 1:
 # This is your Docker ID/path
 # dockerpath=<>
-dockernamespace=manhnguyen308
-dockerpath=project-ml-microservice
+dockerpath=manhnguyen308/project-ml-microservice:v1.0.0
 
 # Step 2
 # Run the Docker Hub container with kubernetes
-kubectl create deploy project-ml-microservice-kubenetes --image=$dockernamespace/$dockerpath:1.0
+kubectl create deploy project-ml-microservice-kubenetes --image=$dockerpath
 
 # Step 3:
 # List kubernetes pods
-kubectl get deploy,rs,svc,pods
+kubectl get pods
 
 # Step 4:
 # Forward the container port to a host
