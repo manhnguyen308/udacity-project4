@@ -1,50 +1,62 @@
-<include a CircleCI status badge, here>
+## STATUS BADGE
+[![<ORG_NAME>](https://circleci.com/gh/manhnguyen308/udacity-project4.svg?style=svg)](<LINK>)
+
 
 ## Project Overview
+This project is for building & deploying a Machine Learning Microservice API to Kubernetes. This includes:
+- Running a docker container locally.
+- Upload docker image into your own docker container.
+- Deploy project image into Kubenetes using image from docker.
 
-In this project, you will apply the skills you have acquired in this course to operationalize a Machine Learning Microservice API. 
 
-You are given a pre-trained, `sklearn` model that has been trained to predict housing prices in Boston according to several features, such as average rooms in a home and data about highway access, teacher-to-pupil ratios, and so on. You can read more about the data, which was initially taken from Kaggle, on [the data source site](https://www.kaggle.com/c/boston-housing). This project tests your ability to operationalize a Python flask app—in a provided file, `app.py`—that serves out predictions (inference) about housing prices through API calls. This project could be extended to any pre-trained machine learning model, such as those for image recognition and data labeling.
+## Project requirements
+The below libraries are required for running this project:
+- Python: 3.7.3
+- Docker
+- Hadolint
+- Kubenetes (Minikube)
 
-### Project Tasks
+## Project instructions
+Execute the below steps in order:
 
-Your project goal is to operationalize this working, machine learning microservice using [kubernetes](https://kubernetes.io/), which is an open-source system for automating the management of containerized applications. In this project you will:
-* Test your project code using linting
-* Complete a Dockerfile to containerize this application
-* Deploy your containerized application using Docker and make a prediction
-* Improve the log statements in the source code for this application
-* Configure Kubernetes and create a Kubernetes cluster
-* Deploy a container using Kubernetes and make a prediction
-* Upload a complete Github repo with CircleCI to indicate that your code has been tested
+1. Navigate to the project folder.
 
-You can find a detailed [project rubric, here](https://review.udacity.com/#!/rubrics/2576/view).
+2. Setup local Project environment:
+- make setup
+- make install
 
-**The final implementation of the project will showcase your abilities to operationalize production microservices.**
+3. Run lint check:
+- make lint
 
----
+4. Run docker in local: 
+- ./run_docker.sh
 
-## Setup the Environment
+5. Make Prediction in docker: 
+- ./make_prediction.sh
 
-* Create a virtualenv with Python 3.7 and activate it. Refer to this link for help on specifying the Python version in the virtualenv. 
-```bash
-python3 -m pip install --user virtualenv
-# You should have Python 3.7 available in your host. 
-# Check the Python path using `which python3`
-# Use a command similar to this one:
-python3 -m virtualenv --python=<path-to-Python3.7> .devops
-source .devops/bin/activate
-```
-* Run `make install` to install the necessary dependencies
+6. Upload local docker image into your docker repository: 
+- ./upload_docker.sh
 
-### Running `app.py`
+7. Start local kubernetes environment:
+- minikube start
 
-1. Standalone:  `python app.py`
-2. Run in Docker:  `./run_docker.sh`
-3. Run in Kubernetes:  `./run_kubernetes.sh`
+8. Deploy application on the Kubenetes: Make sure that you stop the local docker environment first, since it's running on same port.
+- ./run_kubernetes.sh
 
-### Kubernetes Steps
+9. You should see an error due to container is creating, wait for few minutes or run a check:
+- kubectl get pods
 
-* Setup and Configure Docker locally
-* Setup and Configure Kubernetes locally
-* Create Flask app in Container
-* Run via kubectl
+10. When you see "Running" status in your kubenetes container, run the kubenetes script again.
+
+11. Make Prediction for kubenetes:
+- ./make_prediction.sh
+
+
+## Main project files explaination:
+- Dockerfile: scripts for deploying python app to docker environment.
+- Makefile: scripts for application setup and lint test.
+- app.py: main application code.
+- run_docker.sh: scripts for build image & deploying local docker environment.
+- make_prediction.sh: scripts for sending input data to docker application, then it will display the prediction value.
+- upload_docker.sh: scripts for upload local docker image into a public docker container.
+- run_kubernetes.sh: scripts for deploying to local kubenetes environment, using a docker container image.

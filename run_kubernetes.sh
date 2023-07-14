@@ -17,4 +17,4 @@ kubectl get pods
 
 # Step 4:
 # Forward the container port to a host
-kubectl port-forward deployment.apps/project-ml-microservice-kubenetes --address 0.0.0.0 5000:5000
+kubectl port-forward deployment.apps/project-ml-microservice-kubenetes 8000:80
